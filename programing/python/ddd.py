@@ -35,15 +35,17 @@ async def start(message:Message):
     await message.answer('Ваш баланс: 0 \n Введіть зміни вашого бюджету: ')
 
 
-@dp.message()
-async def wallet(message:Message):
+@dp.message(F.text.regexp('^\/add .*'))
+async def wallet(message: Message):
     global balance
     try:
-        change = int(message.text)
+        a = message.text.split(' ')
+        change = int(a[1])
         balance += change
         await message.answer(f"Ваш баланс: {balance}грн")
     except ValueError:
         await message.answer("Вводьте лише числа")
+
 
 @dp.message(Command('exchange'))
 async def ask(message:Message):
@@ -56,7 +58,7 @@ async def ask(message:Message):
         [KeyboardButton(text='Теньге')],
         [KeyboardButton(text='Вона')],
         [KeyboardButton(text='Новозеландський долар')],
-        [KeyboardButton(text='"Російський рубль')],
+        [KeyboardButton(text='Російський рубль')],
         [KeyboardButton(text='Сінгапурський долар')],
         [KeyboardButton(text='Єгипетський фунт')],
         [KeyboardButton(text='Фунт стерлінгів')],
@@ -70,23 +72,134 @@ async def ask(message:Message):
     await message.answer("У яку валюту ви хочете конвертувати ваші гроші?", reply_markup=keyboard)
 
 
-@dp.message(F.text.lower() == 'Австралійський долар')
+@dp.message(F.text == 'Австралійський долар')
 async def help(message:Message):
     url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[0]['rate']
-    await message.answer(f'{balance}UAH = {exchgeange_rate}AUD', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}AUD', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Канадський долар')
+async def help1(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[1]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}CAD', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Юань Женьміньбі')
+async def help2(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[2]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}CNY', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Чеська крона')
+async def help3(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[3]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}CZK', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Форинт')
+async def help4(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[6]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}Ft', reply_markup=ReplyKeyboardRemove())
+@dp.message(F.text == 'Теньге')
+async def help5(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[11]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}KZT', reply_markup=ReplyKeyboardRemove())
+@dp.message(F.text == 'Вона')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[12]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}W', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Новозеландський долар')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[15]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}NZD', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Російський рубль')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[17]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}RUB', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Сінгапурський долар')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[18]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}SGD', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Єгипетський фунт')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[22]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}AUD', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Фунт стерлінгів')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[23]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}EGP', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Долар США')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[24]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}USD', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Турецька ліра')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[28]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}TRY', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Євро')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[31]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}EUR', reply_markup=ReplyKeyboardRemove())
+
+@dp.message(F.text == 'Злотий')
+async def help6(message:Message):
+    url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
+    response = requests.get(url)
+    data = response.json()
+    exchgeange_rate = data[32]['rate']
+    await message.answer(f'{balance}UAH = {balance/exchgeange_rate}PLN', reply_markup=ReplyKeyboardRemove())
 
 
-# @dp.message(F.text.lower() == 'так')
-# async def help(message:Message):
-#     url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json'
-#     response = requests.get(url)
-#     data = response.json()
-#     exchange_rate = data[0]['rate']
-#     await message.answer(f'Ваш баланс {balance*exchange_rate}', reply_markup=ReplyKeyboardRemove())
-#
+
 
 async def main():
     print('bot is active')
