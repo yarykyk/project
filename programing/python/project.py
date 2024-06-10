@@ -1,9 +1,6 @@
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
-from aiogram.utils.keyboard import InlineKeyboardBuilder
-from random import randint
-from aiogram.types import Message, KeyboardButton, ReplyKeyboardRemove, ReplyKeyboardMarkup, InlineKeyboardButton, \
-    CallbackQuery
+from aiogram.types import Message, KeyboardButton, ReplyKeyboardRemove, ReplyKeyboardMarkup
 import asyncio
 import requests
 import basao as dat
@@ -15,7 +12,7 @@ dp = Dispatcher()
 
 
 @dp.message(Command('start'))
-async def chek(message: Message):
+async def create_wallet(message: Message):
     id = message.from_user.id
     username = message.from_user.username
     dat.add_user(id, username)
@@ -23,14 +20,14 @@ async def chek(message: Message):
 
 
 @dp.message(Command('balance'))
-async def start(message: Message):
+async def balance(message: Message):
     user_id = message.from_user.id
     balance = dat.get_balance(user_id)
     await message.answer(f'Ваш баланс: {balance}')
 
 
 @dp.message(Command('add'))
-async def add_funds(message: Message):
+async def add(message: Message):
     try:
         args = message.text.split()
         if len(args) < 2:
@@ -44,14 +41,68 @@ async def add_funds(message: Message):
     except ValueError:
         await message.reply("Будь ласка, введіть правильну суму. Наприклад: /add 100")
 
+@dp.message(Command('create_jar'))
+async def create_jar(message:Message):
+    id = message.from_user.id
+    username = message.from_user.username
+    dat.add_jar(id, username)
+    await message.reply(f"Вітаємо, {username}! Вашу банку для накопичень створено. Щоб дізнатись доступні команди напишіть: /help")
 
+@dp.message(Command('jarb'))
+async def jar_balance(message: Message):
+    user_id = message.from_user.id
+    balance = dat.get_jar(user_id)
+    await message.answer(f'Ваш баланс: {balance}')
+
+@dp.message(Command('jara'))
+async def jar_add(message: Message):
+    try:
+        args = message.text.split()
+        amount = int(args[1])
+        user_id = message.from_user.id
+        balance = dat.get_balance(user_id)
+        if balance > amount:
+            dat.update_jar(user_id, amount)
+            balance_jar = dat.get_jar(user_id)
+            dat.update_balance(user_id, -amount)
+            await message.reply(f"Ваш баланс: {balance_jar} грн")
+        else:
+            await message.reply('У вас не достатньо коштів на гаманці, щоб кинути їх у банку(')
+    except ValueError:
+        await message.reply("Будь ласка, введіть правильну суму. Наприклад: /jara 100")
+
+@dp.message(Command('withdraw'))
+async def withdraw(message:Message):
+    user_id = message.from_user.id
+    balance_jar = dat.get_jar(user_id)
+    amount = balance_jar
+    dat.update_jar(user_id, -amount)
+    dat.update_balance(user_id, amount)
+    await message.reply(f'З вашої банки знято:{balance_jar}грн.')
+
+@dp.message(Command('transactions'))
+async def show_transactions(message:Message):
+    user_id = message.from_user.id
+    transactions = dat.transactions(user_id)
+    if transactions:
+        response = "Ваші транзакції:\n"
+        for i in transactions:
+            response += f"{i[3]}: {i[2]:.2f} грн\n"
+    else:
+        response = "У вас немає транзакцій."
+    await message.reply(response)
 @dp.message(Command('help'))
 async def help(message: Message):
-    await message.answer('Щоб створити новий гаманець(якщо ви його створили 1 раз, більше не потрібно) - /start \n'
+    await message.answer('Гаманець: \n  Щоб створити новий гаманець(якщо ви його створили 1 раз, більше не потрібно) - /start \n'
                          'Щоб переглянути поточний баланс - /balance \n'
                          'Щоб внести зміни у коштах - /add (число) \n'
-                         'Щоб перевести ваші кошти у іншу валюту - /exchange')
-
+                         'Щоб перевести ваші кошти у іншу валюту - /exchange \n '
+                         'Щоб побачити останні транзакції - transactions/ \n'
+                         'Банка: \n Для створення банки - /create_jar(використовувати 1 раз при створенні банки) \n'
+                         'Щоб побачити баланс банки - /jarb \n'
+                         'Щоб поповнити банку - /jara (число) \n'
+                         'Щоб зняти усі кошти з банки на гаманець - /withdraw'
+                         '')
 
 @dp.message(Command('exchange'))
 async def ask(message: Message):
