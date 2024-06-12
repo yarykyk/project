@@ -56,7 +56,6 @@ def get_jar(user_id):
     cursor = conn.cursor()
     cursor.execute('SELECT balance FROM jar WHERE user_id = ?', (user_id,))
     balance = cursor.fetchone()[0]
-    print(balance)
     conn.close()
     return balance
 
@@ -94,5 +93,7 @@ def transactions(user_id):
     transactions = cursor.fetchall()
     conn.close()
     return transactions
+
+
 
 

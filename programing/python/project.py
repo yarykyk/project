@@ -71,6 +71,7 @@ async def jar_add(message: Message):
     except ValueError:
         await message.reply("Будь ласка, введіть правильну суму. Наприклад: /jara 100")
 
+
 @dp.message(Command('withdraw'))
 async def withdraw(message:Message):
     user_id = message.from_user.id
@@ -97,7 +98,7 @@ async def help(message: Message):
                          'Щоб переглянути поточний баланс - /balance \n'
                          'Щоб внести зміни у коштах - /add (число) \n'
                          'Щоб перевести ваші кошти у іншу валюту - /exchange \n '
-                         'Щоб побачити останні транзакції - transactions/ \n'
+                         'Щоб побачити останні транзакції - /transactions \n'
                          'Банка: \n Для створення банки - /create_jar(використовувати 1 раз при створенні банки) \n'
                          'Щоб побачити баланс банки - /jarb \n'
                          'Щоб поповнити банку - /jara (число) \n'
@@ -138,7 +139,7 @@ async def help(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[0]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} AUD', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} AUD', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Канадський долар')
