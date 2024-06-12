@@ -150,7 +150,7 @@ async def help1(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[1]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} CAD', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} CAD', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Юань Женьміньбі')
@@ -161,7 +161,7 @@ async def help2(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[2]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} CNY', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} CNY', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Чеська крона')
@@ -172,7 +172,7 @@ async def help3(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[3]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} CZK', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} CZK', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Форинт')
@@ -183,7 +183,7 @@ async def help4(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[6]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} Ft', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} Ft', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Теньге')
@@ -194,7 +194,7 @@ async def help5(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[11]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} KZT', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} KZT', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Вона')
@@ -205,7 +205,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[12]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} W', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} W', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Новозеландський долар')
@@ -216,7 +216,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[15]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} NZD', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} NZD', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Російський рубль')
@@ -227,7 +227,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[17]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} RUB', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} RUB', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Сінгапурський долар')
@@ -238,7 +238,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[18]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} SGD', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} SGD', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Єгипетський фунт')
@@ -249,7 +249,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[22]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} EGP', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} EGP', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Фунт стерлінгів')
@@ -260,7 +260,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[23]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} GBP', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} GBP', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Долар США')
@@ -271,7 +271,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[24]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} USD', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} USD', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Турецька ліра')
@@ -282,7 +282,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[28]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} TRY', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} TRY', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Євро')
@@ -293,7 +293,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[31]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} EUR', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} EUR', reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(F.text == 'Злотий')
@@ -304,7 +304,7 @@ async def help6(message: Message):
     response = requests.get(url)
     data = response.json()
     exchgeange_rate = data[32]['rate']
-    await message.answer(f'{balance}UAH = {balance / exchgeange_rate} PLN', reply_markup=ReplyKeyboardRemove())
+    await message.answer(f'{balance}UAH = {round((balance / exchgeange_rate), 2)} PLN', reply_markup=ReplyKeyboardRemove())
 
 
 async def main():
