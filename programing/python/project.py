@@ -92,6 +92,13 @@ async def show_transactions(message:Message):
     else:
         response = "У вас немає транзакцій."
     await message.reply(response)
+
+@dp.message(Command('clear'))
+async def clear(message:Message):
+    user_id = message.from_user.id
+    dat.clear(user_id)
+    await message.reply("Історію транзакцій очищено")
+
 @dp.message(Command('help'))
 async def help(message: Message):
     await message.answer('Гаманець: \n  Щоб створити новий гаманець(якщо ви його створили 1 раз, більше не потрібно) - /start \n'
@@ -99,6 +106,7 @@ async def help(message: Message):
                          'Щоб внести зміни у коштах - /add (число) \n'
                          'Щоб перевести ваші кошти у іншу валюту - /exchange \n '
                          'Щоб побачити останні транзакції - /transactions \n'
+                         'Щоб очистити історію транзакцій - /clear \n'
                          'Банка: \n Для створення банки - /create_jar(використовувати 1 раз при створенні банки) \n'
                          'Щоб побачити баланс банки - /jarb \n'
                          'Щоб поповнити банку - /jara (число) \n'

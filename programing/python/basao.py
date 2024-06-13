@@ -94,6 +94,13 @@ def transactions(user_id):
     conn.close()
     return transactions
 
+def clear(user_id):
+    conn = sqlite3.connect('wallet.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM transactions WHERE user_id = ?', (user_id,))
+    conn.commit()
+    conn.close()
+
 
 
 
